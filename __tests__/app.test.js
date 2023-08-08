@@ -7,17 +7,6 @@ const db = require("../db");
 
 let testBook
 
-const testData = {
-    "isbn": "4043226843",
-    "amazon_url": "http://test-book.org/not-a-real-book",
-    "author": "Jonathan Testington",
-    "language": "english",
-    "pages": 300,
-    "publisher": "Knowsmore Publishing",
-    "title": "Exhibit-A: Putting Your Best Foot Forward",
-    "year": 2023
-};
-
 beforeEach(async function(){
     const result = await db.query(`INSERT INTO books VALUES (
                                     '4043226843',
@@ -37,7 +26,6 @@ afterEach(async function(){
 })
 
 afterAll(async function() {
-    // close db connection
     await db.end();
 });
 
@@ -112,7 +100,7 @@ describe('POST /books/', () => {
           });
         const responses = await Promise.all([q1, q2, q3]);
         for (const response of responses) {
-            expect(response.statusCode).toEqual(500);
+            expect(response.statusCode).toEqual(400);
         };
     });
 });
@@ -165,7 +153,7 @@ describe('PUT /books/:isbn', () => {
           });
         const responses = await Promise.all([q1, q2, q3]);
         for (const response of responses) {
-            expect(response.statusCode).toEqual(500);
+            expect(response.statusCode).toEqual(400);
         };
     });
 
